@@ -1,1 +1,1 @@
-# dinhquoc1st.github.io
+# Admin dashboard for [PTNK Chatible](https://github.com/ptnkchat/ptnkchat)
