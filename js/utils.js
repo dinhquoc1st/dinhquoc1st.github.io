@@ -21,7 +21,7 @@ function getDateStr(time) {
 }
 
 function getFileName() {
-  return 'ptnkchatible_backup_' + getDateStr(-1).replace(/\//g, '-').replace(/\:/g, '-').replace(/\s+/, '_') + '.json';
+  return 'healernehihi' + getDateStr(-1).replace(/\//g, '-').replace(/\:/g, '-').replace(/\s+/, '_') + '.json';
 }
 
 function download(filename, text) {
@@ -84,7 +84,7 @@ function getBackupFile() {
       redirectToLogin();
       return;
     } else if (res.success === true) {
-      let data = { chatRoom: res.chatRoom, waitRoom: res.waitRoom };
+      let data = { chatRoom: res.chatRoom, waitRoom: res.waitRoom ,gender: res.gender,lastPerson: res.lastPerson};
       download(getFileName(), JSON.stringify(data));
       $('#backup_btn').html('Tải bản sao lưu');
     }
