@@ -1,5 +1,5 @@
 // CHANGE THIS
-var host = 'https://danangchatbot.herokuapp.com';
+var host = 'https://chat-stranger.onrender.com';
 //var host = 'http://localhost:5000';
 setAppUrl(host);
 
