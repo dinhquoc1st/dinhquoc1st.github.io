@@ -1,165 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SVĐN Chatbot - Admin</title>
-
-    <link href="/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/css/styles.css" rel="stylesheet" />
-
-    <!--Icons-->
-    <script src="/js/lumino.glyphs.js"></script>
-
-    <style>
-      a:hover {
-        cursor: pointer;
-      }
-    </style>
+    <title>SVĐN Chatible — Công cụ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="/css/app.css" rel="stylesheet" />
   </head>
-
   <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">
-            <span>SVĐNChatbot</span>
-            Admin
-          </a>
-        </div>
-      </div>
-      <!-- /.container-fluid -->
-    </nav>
+    <div class="app" id="app">
+      <main class="main">
+        <div class="main__inner">
+          <h1 class="page-title">Công cụ</h1>
 
-    <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-      <ul class="nav menu">
-        <li>
-          <a href="admin.html">
-            <svg class="glyph stroked app-window"><use xlink:href="#stroked-app-window"></use></svg>
-            Thông tin
-          </a>
-        </li>
-        <li>
-          <a href="connect.html">
-            <svg class="glyph stroked app-window"><use xlink:href="#stroked-app-window"></use></svg>
-            Kết nối lại User
-          </a>
-        </li>
-        <li class="active">
-          <a>
-            <svg class="glyph stroked app-window"><use xlink:href="#stroked-app-window"></use></svg>
-            Công cụ
-          </a>
-        </li>
-        <li role="presentation" class="divider"></li>
-        <li>
-          <a href="logout.html">
-            <svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>
-            Đăng xuất
-          </a>
-        </li>
-        <li role="presentation" class="divider"></li>
-      </ul>
-      <div class="attribution">
-        Template by
-        <a href="http://www.medialoot.com/item/lumino-admin-bootstrap-template/">Medialoot</a>
-        <br />
-        <a href="http://www.glyphs.co" style="color: #333;">Icons by Glyphs</a>
-      </div>
-    </div>
-    <!--/.sidebar-->
-
-    <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-      <div class="row">
-        <ol class="breadcrumb">
-          <li>
-            <a href="#">
-              <svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg>
-            </a>
-          </li>
-        </ol>
-      </div>
-      <!--/.row-->
-
-      <div class="row">
-        <div class="col-lg-12">
-          <h2>Công cụ</h2>
-        </div>
-        <div class="col-sm-12 col-md-12 col-lg-12">
-          <div class="panel panel-default">
-            <div class="panel-body">
-              <b>Phiên bản chatbot:</b>
-              <span id="version"></span>
+          <div class="card">
+            <div class="card__body">
+              <b>Phiên bản chatbot:</b> <span id="version" class="muted">…</span>
             </div>
           </div>
-        </div>
-        <div class="col-sm-12 col-md-12 col-lg-12">
-          <div class="panel panel-default">
-            <div class="panel-heading">Check info</div>
-            <div class="panel-body">
-              <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
-                <div class="form-group">
-                  <label>Check info dựa trên ID</label>
-                  <textarea class="form-control" placeholder="" id="id"></textarea>
+
+          <div class="card">
+            <div class="card__header">Kiểm tra thông tin user</div>
+            <div class="card__body">
+              <div class="grid grid--2">
+                <div>
+                  <div class="field">
+                    <label for="tool-id">Check info theo ID</label>
+                    <textarea class="input" id="tool-id" rows="1" placeholder="Nhập ID"></textarea>
+                  </div>
                   <br />
-                  <button class="btn btn-primary" onclick="checkInfo()">Check</button>
+                  <button class="btn" id="check-btn">Kiểm tra</button>
                 </div>
+                <div id="tool-info"></div>
               </div>
-              <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" id="ptnkinfo"></div>
             </div>
           </div>
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-6">
-          <div class="panel panel-default">
-            <div class="panel-heading">Sao lưu</div>
-            <div class="panel-body">
-              <b>Tạo bản sao lưu trạng thái ghép cặp.</b>
-              <br />
-              <br />
-              <button class="btn btn-primary" onclick="getBackupFile()" id="backup_btn">Tải bản sao lưu</button>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-6">
-          <div class="panel panel-default">
-            <div class="panel-heading" style="color: Red;">Xoá dữ liệu</div>
-            <div class="panel-body">
-              <b>Xóa toàn bộ dữ liệu trên server!</b>
-              <br />
-              <br />
-              <button class="btn btn-primary" onclick="resetDatabase()" id="resetDb_btn">Xoá dữ liệu</button>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-6">
-          <div class="panel panel-default">
-            <div class="panel-heading">Khôi phục</div>
-            <div class="panel-body">
-              <b>Khôi phục trạng thái ghép cặp.</b>
-              <br />
-              <br />
-              Chọn file:
-              <br />
-              <input type="file" id="fileToLoad" onchange="restore(event)" />
-              <br />
-              <b id="restore_status"></b>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- /.row -->
-    </div>
-    <!--/.main-->
 
-    <script src="/js/jquery-3.5.0.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/cookie.js"></script>
-    <script src="/js/utils.js"></script>
+          <div class="grid grid--2">
+            <div class="card">
+              <div class="card__header">Sao lưu</div>
+              <div class="card__body">
+                <p class="muted">Tạo bản sao lưu trạng thái ghép cặp.</p>
+                <button class="btn" id="backup-btn">Tải bản sao lưu</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card__header">Khôi phục</div>
+              <div class="card__body">
+                <p class="muted">Khôi phục trạng thái ghép cặp từ file sao lưu.</p>
+                <input type="file" id="fileToLoad" accept="application/json" />
+                <div id="restore-status"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card__header card__header--danger">Xoá dữ liệu</div>
+            <div class="card__body">
+              <p class="muted">Xoá toàn bộ dữ liệu trên server! Hành động không thể phục hồi.</p>
+              <button class="btn btn--danger" id="reset-btn">Xoá dữ liệu</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script type="module" src="/js/tools.js"></script>
   </body>
 </html>
