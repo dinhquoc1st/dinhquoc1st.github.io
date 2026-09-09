@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SVĐN Chatible — Kết nối lại User</title>
+    <title data-i18n="connect.title">SVĐN Chatible — Kết nối lại User</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -15,31 +15,31 @@
     <div class="app" id="app">
       <main class="main">
         <div class="main__inner">
-          <h1 class="page-title">Kết nối lại User</h1>
+          <h1 class="page-title" data-i18n="connect.heading">Kết nối lại User</h1>
 
           <div class="card">
-            <div class="card__header">Kết nối 2 user</div>
+            <div class="card__header" data-i18n="connect.cardTitle">Kết nối 2 user</div>
             <div class="card__body">
               <div class="grid grid--2">
                 <div>
                   <div class="field">
-                    <label for="id1">ID 1</label>
-                    <textarea class="input" id="id1" rows="1" placeholder="Nhập ID 1"></textarea>
+                    <label for="id1" data-i18n="connect.id1">ID 1</label>
+                    <textarea class="input" id="id1" rows="1" placeholder="Nhập ID 1" data-i18n-placeholder="connect.id1Placeholder"></textarea>
                   </div>
                   <div class="field">
-                    <label for="id2">ID 2</label>
-                    <textarea class="input" id="id2" rows="1" placeholder="Nhập ID 2"></textarea>
+                    <label for="id2" data-i18n="connect.id2">ID 2</label>
+                    <textarea class="input" id="id2" rows="1" placeholder="Nhập ID 2" data-i18n-placeholder="connect.id2Placeholder"></textarea>
                   </div>
                   <div class="field">
-                    <label for="gender1">Giới tính ID 1</label>
+                    <label for="gender1" data-i18n="connect.gender1">Giới tính ID 1</label>
                     <input class="input" id="gender1" placeholder="MALE / FEMALE" />
                   </div>
                   <div class="field">
-                    <label for="gender2">Giới tính ID 2</label>
+                    <label for="gender2" data-i18n="connect.gender2">Giới tính ID 2</label>
                     <input class="input" id="gender2" placeholder="MALE / FEMALE" />
                   </div>
                   <br />
-                  <button class="btn" id="connect-btn">Kết nối</button>
+                  <button class="btn" id="connect-btn" data-i18n="connect.submit">Kết nối</button>
                 </div>
                 <div id="connect-status"></div>
               </div>
@@ -48,7 +48,7 @@
 
           <div class="card card--accent">
             <div class="card__header">
-              <span>Trạng thái ghép cặp</span>
+              <span data-i18n="matching.status">Trạng thái ghép cặp</span>
               <span class="muted" id="refresh-time"></span>
             </div>
             <div class="card__body">
@@ -61,9 +61,9 @@
           </div>
 
           <div class="card">
-            <div class="card__header">Thông tin user</div>
+            <div class="card__header" data-i18n="user.info">Thông tin user</div>
             <div class="card__body">
-              <div id="userinfo"><div class="muted">Chọn một user để xem thông tin.</div></div>
+              <div id="userinfo"><div class="muted" data-i18n="user.select">Chọn một user để xem thông tin.</div></div>
             </div>
           </div>
         </div>

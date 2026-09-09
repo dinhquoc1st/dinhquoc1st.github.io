@@ -3,7 +3,9 @@ import { request, isAuthError } from './api.js';
 import { redirectToLogin } from './session.js';
 import { mountChrome, byId } from './dom.js';
 import { initDashboard } from './dashboard.js';
+import { applyTranslations, t } from './i18n.js';
 
+applyTranslations();
 mountChrome('connect');
 initDashboard();
 
@@ -16,12 +18,12 @@ async function connectUser() {
   const gender2 = byId('gender2').value.trim();
 
   if (!id1 || !id2) {
-    status.innerHTML = '<span class="text-danger">Vui lòng nhập đủ 2 ID.</span>';
+    status.innerHTML = `<span class="text-danger">${t('connect.required')}</span>`;
     return;
   }
-  if (!confirm('Bạn có chắc muốn kết nối lại 2 ID này?')) return;
+  if (!confirm(t('connect.confirm'))) return;
 
-  status.innerHTML = '<span class="spinner"></span> Đang kết nối...';
+  status.innerHTML = `<span class="spinner"></span> ${t('connect.loading')}`;
   try {
     // IDs sent as strings — never parsed to Number.
     const res = await request('/admin/edit/chatroom', {
@@ -31,12 +33,12 @@ async function connectUser() {
     if (isAuthError(res)) return redirectToLogin();
     // Backend returns { success: true } (old code wrongly checked res.stats).
     if (res.success === true) {
-      status.innerHTML = '<b class="text-success">Kết nối thành công!</b>';
+      status.innerHTML = `<b class="text-success">${t('connect.success')}</b>`;
     } else {
-      status.innerHTML = '<span class="text-danger">Kết nối thất bại.</span>';
+      status.innerHTML = `<span class="text-danger">${t('connect.failure')}</span>`;
     }
   } catch {
-    status.innerHTML = '<span class="text-danger">Lỗi kết nối tới máy chủ.</span>';
+    status.innerHTML = `<span class="text-danger">${t('connect.connectionError')}</span>`;
   }
 }
 

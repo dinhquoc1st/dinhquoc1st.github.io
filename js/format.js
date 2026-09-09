@@ -1,6 +1,9 @@
 // Formatting helpers (replaces moment.js + the duplicated getDateStr()).
 
-const dateTimeFmt = new Intl.DateTimeFormat('vi-VN', {
+import { getLanguage, t } from './i18n.js';
+
+function dateTimeFormatter() {
+  return new Intl.DateTimeFormat(getLanguage() === 'en' ? 'en-US' : 'vi-VN', {
   weekday: 'short',
   day: '2-digit',
   month: '2-digit',
@@ -8,7 +11,8 @@ const dateTimeFmt = new Intl.DateTimeFormat('vi-VN', {
   hour: '2-digit',
   minute: '2-digit',
   second: '2-digit',
-});
+  });
+}
 
 /**
  * Format a date/time value (Date, ISO string or epoch ms) in Vietnamese.
@@ -18,7 +22,7 @@ const dateTimeFmt = new Intl.DateTimeFormat('vi-VN', {
 export function formatDateTime(value) {
   const d = value instanceof Date ? value : new Date(value);
   if (Number.isNaN(d.getTime())) return '';
-  return dateTimeFmt.format(d);
+  return dateTimeFormatter().format(d);
 }
 
 /** Current time, formatted. */
@@ -27,15 +31,15 @@ export function now() {
 }
 
 /**
- * Map a backend gender enum (FEMALE/MALE/...) to a Vietnamese label.
+ * Map a backend gender enum (FEMALE/MALE/...) to the active-language label.
  * @param {string} gender
  * @returns {'nam'|'nữ'|'khác'}
  */
 export function genderLabel(gender) {
   const g = String(gender || '').toUpperCase();
-  if (g === 'FEMALE') return 'nữ';
-  if (g === 'MALE') return 'nam';
-  return 'khác';
+  if (g === 'FEMALE') return t('gender.female');
+  if (g === 'MALE') return t('gender.male');
+  return t('gender.other');
 }
 
 /** CSS modifier for a gender badge. */

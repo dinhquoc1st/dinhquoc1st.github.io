@@ -1,5 +1,6 @@
 // Small DOM helpers + shared app chrome (topbar + sidebar).
 // Replaces the nav/sidebar markup that was copy-pasted across pages.
+import { languageSelector, t } from './i18n.js';
 
 /**
  * Escape a value for safe insertion into HTML (text or attribute context).
@@ -36,9 +37,9 @@ function icon(name) {
 }
 
 const NAV = [
-  { key: 'admin', href: '/admin.html', label: 'Thông tin', icon: 'info' },
-  { key: 'connect', href: '/connect.html', label: 'Kết nối lại User', icon: 'link' },
-  { key: 'tools', href: '/utils.html', label: 'Công cụ', icon: 'tools' },
+  { key: 'admin', href: '/admin.html', label: 'nav.info', icon: 'info' },
+  { key: 'connect', href: '/connect.html', label: 'nav.connect', icon: 'link' },
+  { key: 'tools', href: '/utils.html', label: 'nav.tools', icon: 'tools' },
 ];
 
 /**
@@ -53,7 +54,7 @@ export function mountChrome(active) {
   const navItems = NAV.map(
     (item) => `
       <li class="nav__item${item.key === active ? ' nav__item--active' : ''}">
-        <a href="${item.href}">${icon(item.icon)}<span>${item.label}</span></a>
+        <a href="${item.href}">${icon(item.icon)}<span>${t(item.label)}</span></a>
       </li>`,
   ).join('');
 
@@ -64,26 +65,41 @@ export function mountChrome(active) {
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
           stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
-      <div class="topbar__brand">SVĐN Chatible <small>Admin</small></div>
+      <div class="topbar__brand">SVĐN Chatible <small>${t('brand.admin')}</small></div>
     </header>
     <aside class="sidebar">
       <ul class="nav">
         ${navItems}
         <li class="nav__divider"></li>
         <li class="nav__item nav__item--danger">
-          <a href="/logout.html">${icon('logout')}<span>Đăng xuất</span></a>
+          <a href="/logout.html">${icon('logout')}<span>${t('nav.logout')}</span></a>
         </li>
       </ul>
-      <div class="sidebar__footer">SVĐN Chatible Admin Dashboard</div>
+      <div class="sidebar__footer">${t('footer')}</div>
     </aside>
     <div class="backdrop" id="sidebar-backdrop"></div>`;
 
   // Insert chrome before <main>.
   app.insertBefore(chrome, app.firstChild);
+  chrome.querySelector('.topbar').appendChild(languageSelector());
 
   // Mobile sidebar toggle.
   const toggle = byId('sidebar-toggle');
   const backdrop = byId('sidebar-backdrop');
   toggle?.addEventListener('click', () => app.classList.toggle('sidebar-open'));
   backdrop?.addEventListener('click', () => app.classList.remove('sidebar-open'));
+
+  window.addEventListener('languagechange', () => {
+    mountChromeLabels(chrome);
+  });
+}
+
+function mountChromeLabels(chrome) {
+  chrome.querySelector('.topbar__brand small').textContent = t('brand.admin');
+  chrome.querySelectorAll('.nav__item a span').forEach((el, index) => {
+    const item = NAV[index];
+    if (item) el.textContent = t(item.label);
+    else el.textContent = t('nav.logout');
+  });
+  chrome.querySelector('.sidebar__footer').textContent = t('footer');
 }

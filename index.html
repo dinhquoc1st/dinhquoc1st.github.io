@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SVĐN Chatible — Đăng nhập</title>
+    <title data-i18n="login.title">SVĐN Chatible — Đăng nhập</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -21,14 +21,14 @@
           </svg>
         </div>
         <h1 class="login__title">SVĐN Chatible</h1>
-        <p class="login__subtitle">Bảng điều khiển quản trị</p>
+        <p class="login__subtitle" data-i18n="login.subtitle">Bảng điều khiển quản trị</p>
 
         <form class="login__form" id="login-form">
           <div class="field">
-            <label for="pwd">Mật khẩu</label>
-            <input class="input" type="password" id="pwd" placeholder="Nhập mật khẩu" autocomplete="current-password" />
+            <label for="pwd" data-i18n="login.password">Mật khẩu</label>
+            <input class="input" type="password" id="pwd" placeholder="Nhập mật khẩu" data-i18n-placeholder="login.passwordPlaceholder" autocomplete="current-password" />
           </div>
-          <button class="btn btn--block" type="submit" id="login-button">Đăng nhập</button>
+          <button class="btn btn--block" type="submit" id="login-button" data-i18n="login.submit">Đăng nhập</button>
           <div class="login__error" id="login-error"></div>
         </form>
       </div>

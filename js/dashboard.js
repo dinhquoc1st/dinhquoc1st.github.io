@@ -12,6 +12,7 @@ import { request, isAuthError } from './api.js';
 import { redirectToLogin } from './session.js';
 import { escapeHtml, byId } from './dom.js';
 import { formatDateTime, now, genderLabel, genderClass } from './format.js';
+import { t } from './i18n.js';
 
 const REFRESH_MS = 5000;
 
@@ -27,7 +28,7 @@ async function fetchChatRoom() {
     const data = await request('/admin/read/chatroom');
     if (isAuthError(data)) return redirectToLogin();
     if (data.success !== true) {
-      el.innerHTML = '<div class="muted">Không lấy được phòng chat.</div>';
+      el.innerHTML = `<div class="muted">${t('dashboard.loadChatError')}</div>`;
       return;
     }
 
@@ -53,11 +54,11 @@ async function fetchChatRoom() {
       .join('');
 
     el.innerHTML = `
-      <div class="section-label">Phòng chat — ${rooms.length} cặp (${rooms.length * 2} người:
-        ${men} nam, ${women} nữ, ${unk} khác)</div>
-      <div class="pairs">${rows || '<div class="muted">Trống.</div>'}</div>`;
+      <div class="section-label">${t('dashboard.chatRoom')} — ${rooms.length} ${t('dashboard.pairs')} (${rooms.length * 2} ${t('dashboard.people')}:
+        ${men} ${t('dashboard.men')}, ${women} ${t('dashboard.women')}, ${unk} ${t('dashboard.other')})</div>
+      <div class="pairs">${rows || `<div class="muted">${t('dashboard.empty')}</div>`}</div>`;
   } catch {
-    el.innerHTML = '<div class="text-danger">Lỗi kết nối khi tải phòng chat.</div>';
+    el.innerHTML = `<div class="text-danger">${t('dashboard.loadChatConnectionError')}</div>`;
   }
 }
 
@@ -68,7 +69,7 @@ async function fetchWaitRoom() {
     const data = await request('/admin/read/waitroom');
     if (isAuthError(data)) return redirectToLogin();
     if (data.success !== true) {
-      el.innerHTML = '<div class="muted">Không lấy được phòng chờ.</div>';
+      el.innerHTML = `<div class="muted">${t('dashboard.loadWaitError')}</div>`;
       return;
     }
 
@@ -90,11 +91,11 @@ async function fetchWaitRoom() {
       .join('');
 
     el.innerHTML = `
-      <div class="section-label">Phòng chờ — ${room.length} người
-        (${men} nam, ${women} nữ, ${unk} khác)</div>
-      <div class="chips">${chips || '<div class="muted">Trống.</div>'}</div>`;
+      <div class="section-label">${t('dashboard.waitRoom')} — ${room.length} ${t('dashboard.people')}
+        (${men} ${t('dashboard.men')}, ${women} ${t('dashboard.women')}, ${unk} ${t('dashboard.other')})</div>
+      <div class="chips">${chips || `<div class="muted">${t('dashboard.empty')}</div>`}</div>`;
   } catch {
-    el.innerHTML = '<div class="text-danger">Lỗi kết nối khi tải phòng chờ.</div>';
+    el.innerHTML = `<div class="text-danger">${t('dashboard.loadWaitConnectionError')}</div>`;
   }
 }
 
@@ -111,10 +112,10 @@ async function fetchStats() {
         <span><b>Uptime:</b> ${escapeHtml(data.uptime)}</span>
       </div>`;
     } else {
-      el.innerHTML = '<div class="muted">Không lấy được thông số máy chủ.</div>';
+      el.innerHTML = `<div class="muted">${t('dashboard.loadStatsError')}</div>`;
     }
   } catch {
-    el.innerHTML = '<div class="text-danger">Lỗi kết nối khi tải thông số.</div>';
+    el.innerHTML = `<div class="text-danger">${t('dashboard.loadStatsConnectionError')}</div>`;
   }
 }
 
@@ -130,16 +131,16 @@ function refresh() {
 async function showUserInfo(id) {
   const el = byId('userinfo');
   if (!el) return;
-  el.innerHTML = '<div class="muted"><span class="spinner"></span> Đang tải...</div>';
+  el.innerHTML = `<div class="muted"><span class="spinner"></span> ${t('dashboard.loading')}</div>`;
   try {
     const data = await request('/admin/userinfo', { method: 'POST', body: { id } });
     if (isAuthError(data)) return redirectToLogin();
 
     if (data.error === true) {
       el.innerHTML = `<div class="userinfo__id"><b>ID:</b> ${escapeHtml(id)}</div>
-        <div class="text-danger">Không lấy được thông tin user.</div>
+        <div class="text-danger">${t('dashboard.userInfoError')}</div>
         <button class="btn btn--danger btn--sm" data-action="remove" data-id="${escapeHtml(id)}">
-          Kết thúc chat</button>`;
+          ${t('dashboard.endChat')}</button>`;
       return;
     }
 
@@ -151,16 +152,16 @@ async function showUserInfo(id) {
         <div><b>${escapeHtml(p.name)}</b> ${genderBadge(p.gender === 'male' ? 'MALE' : 'FEMALE')}</div>
         <br />
         <button class="btn btn--danger btn--sm" data-action="remove" data-id="${escapeHtml(id)}">
-          Kết thúc chat</button>
+          ${t('dashboard.endChat')}</button>
       </div>
     </div>`;
   } catch {
-    el.innerHTML = '<div class="text-danger">Lỗi kết nối.</div>';
+    el.innerHTML = `<div class="text-danger">${t('dashboard.connectionError')}</div>`;
   }
 }
 
 async function removeUser(id) {
-  if (!confirm('Bạn có chắc muốn kết thúc chat của người này?')) return;
+  if (!confirm(t('dashboard.endChatConfirm'))) return;
   try {
     const res = await request('/admin/edit/chatroom', {
       method: 'POST',
@@ -169,12 +170,12 @@ async function removeUser(id) {
     if (isAuthError(res)) return redirectToLogin();
     if (res.success === true || res.status === true) {
       const el = byId('userinfo');
-      if (el) el.innerHTML = `<div class="muted">Đã kết thúc chat cho ID ${escapeHtml(id)}.</div>`;
+      if (el) el.innerHTML = `<div class="muted">${t('dashboard.chatEnded', { id: escapeHtml(id) })}</div>`;
       refresh();
     }
   } catch {
     const el = byId('userinfo');
-    if (el) el.innerHTML = '<div class="text-danger">Lỗi khi kết thúc chat.</div>';
+    if (el) el.innerHTML = `<div class="text-danger">${t('dashboard.endChatError')}</div>`;
   }
 }
 
@@ -194,4 +195,5 @@ export function initDashboard() {
 
   refresh();
   setInterval(refresh, REFRESH_MS);
+  window.addEventListener('languagechange', refresh);
 }

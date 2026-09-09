@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SVĐN Chatible — Công cụ</title>
+    <title data-i18n="tools.title">SVĐN Chatible — Công cụ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -15,25 +15,25 @@
     <div class="app" id="app">
       <main class="main">
         <div class="main__inner">
-          <h1 class="page-title">Công cụ</h1>
+          <h1 class="page-title" data-i18n="tools.heading">Công cụ</h1>
 
           <div class="card">
             <div class="card__body">
-              <b>Phiên bản chatbot:</b> <span id="version" class="muted">…</span>
+              <b data-i18n="tools.version">Phiên bản chatbot:</b> <span id="version" class="muted">…</span>
             </div>
           </div>
 
           <div class="card">
-            <div class="card__header">Kiểm tra thông tin user</div>
+            <div class="card__header" data-i18n="tools.checkTitle">Kiểm tra thông tin user</div>
             <div class="card__body">
               <div class="grid grid--2">
                 <div>
                   <div class="field">
-                    <label for="tool-id">Check info theo ID</label>
-                    <textarea class="input" id="tool-id" rows="1" placeholder="Nhập ID"></textarea>
+                    <label for="tool-id" data-i18n="tools.checkLabel">Kiểm tra thông tin theo ID</label>
+                    <textarea class="input" id="tool-id" rows="1" placeholder="Nhập ID" data-i18n-placeholder="tools.idPlaceholder"></textarea>
                   </div>
                   <br />
-                  <button class="btn" id="check-btn">Kiểm tra</button>
+                  <button class="btn" id="check-btn" data-i18n="tools.check">Kiểm tra</button>
                 </div>
                 <div id="tool-info"></div>
               </div>
@@ -42,17 +42,17 @@
 
           <div class="grid grid--2">
             <div class="card">
-              <div class="card__header">Sao lưu</div>
+              <div class="card__header" data-i18n="tools.backup">Sao lưu</div>
               <div class="card__body">
-                <p class="muted">Tạo bản sao lưu trạng thái ghép cặp.</p>
-                <button class="btn" id="backup-btn">Tải bản sao lưu</button>
+                <p class="muted" data-i18n="tools.backupDescription">Tạo bản sao lưu trạng thái ghép cặp.</p>
+                <button class="btn" id="backup-btn" data-i18n="tools.download">Tải bản sao lưu</button>
               </div>
             </div>
 
             <div class="card">
-              <div class="card__header">Khôi phục</div>
+              <div class="card__header" data-i18n="tools.restore">Khôi phục</div>
               <div class="card__body">
-                <p class="muted">Khôi phục trạng thái ghép cặp từ file sao lưu.</p>
+                <p class="muted" data-i18n="tools.restoreDescription">Khôi phục trạng thái ghép cặp từ file sao lưu.</p>
                 <input type="file" id="fileToLoad" accept="application/json" />
                 <div id="restore-status"></div>
               </div>
@@ -60,10 +60,10 @@
           </div>
 
           <div class="card">
-            <div class="card__header card__header--danger">Xoá dữ liệu</div>
+            <div class="card__header card__header--danger" data-i18n="tools.delete">Xoá dữ liệu</div>
             <div class="card__body">
-              <p class="muted">Xoá toàn bộ dữ liệu trên server! Hành động không thể phục hồi.</p>
-              <button class="btn btn--danger" id="reset-btn">Xoá dữ liệu</button>
+              <p class="muted" data-i18n="tools.deleteDescription">Xoá toàn bộ dữ liệu trên server! Hành động không thể phục hồi.</p>
+              <button class="btn btn--danger" id="reset-btn" data-i18n="tools.delete">Xoá dữ liệu</button>
             </div>
           </div>
         </div>

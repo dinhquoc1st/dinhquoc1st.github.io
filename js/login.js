@@ -4,6 +4,10 @@
 import { checkToken } from './api.js';
 import { getToken, setToken, clearToken } from './session.js';
 import { byId } from './dom.js';
+import { applyTranslations, languageSelector, t } from './i18n.js';
+
+applyTranslations();
+document.querySelector('.login__card').prepend(languageSelector());
 
 const form = byId('login-form');
 const pwdInput = byId('pwd');
@@ -16,7 +20,7 @@ function showError(msg) {
 
 function setLoading(loading) {
   button.disabled = loading;
-  button.innerHTML = loading ? '<span class="spinner"></span> Đang đăng nhập...' : 'Đăng nhập';
+  button.innerHTML = loading ? `<span class="spinner"></span> ${t('login.loading')}` : t('login.submit');
 }
 
 function buildToken(password) {
@@ -59,12 +63,12 @@ form.addEventListener('submit', async (event) => {
       return;
     }
     if (res && res.error === true && (res.errortype === 'auth' || res.errorType === 'auth')) {
-      showError('Sai mật khẩu!');
+      showError(t('login.invalidPassword'));
     } else {
-      showError('Có lỗi xảy ra!');
+      showError(t('login.error'));
     }
   } catch {
-    showError('Lỗi kết nối tới máy chủ!');
+    showError(t('login.connectionError'));
   } finally {
     setLoading(false);
   }
